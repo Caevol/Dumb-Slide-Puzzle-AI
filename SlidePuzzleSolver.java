@@ -35,12 +35,7 @@ public class SlidePuzzleSolver {
 
         System.out.println("Puzzle solved in : " + pointerMap.getStepNum() + " steps!");
 
-        for(int y = 0; y < pointerMap.getSize(); ++y){
-            for(int x = 0; x < pointerMap.getSize(); ++x){
-                System.out.print("" + pointerMap.getValueAtPosition(x, y) + " ");
-            }
-            System.out.print('\n');
-        }
+        pointerMap.printSolution();
 
     }
 
@@ -65,25 +60,25 @@ public class SlidePuzzleSolver {
         if(posY != 0){
             ArrayList<ArrayList<Integer>> upMap = copyMap(cloneMap);
             swapIndexes(upMap, posX, posY, posX, posY -1);
-            puzzleQueue.add(new MapState(upMap, pointerMap.getStepNum() + 1));
+            puzzleQueue.add(new MapState(upMap, pointerMap.getStepNum() + 1, pointerMap));
         }
         //down
         if(posY != pointerMap.getSize() -1){
             ArrayList<ArrayList<Integer>> downMap = copyMap(cloneMap);
             swapIndexes(downMap, posX, posY, posX, posY +1);
-            puzzleQueue.add(new MapState(downMap, pointerMap.getStepNum() + 1));
+            puzzleQueue.add(new MapState(downMap, pointerMap.getStepNum() + 1, pointerMap));
         }
         //left
         if(posX != 0){
             ArrayList<ArrayList<Integer>> leftMap = copyMap(cloneMap);
             swapIndexes(leftMap, posX, posY, posX -1, posY);
-            puzzleQueue.add(new MapState(leftMap, pointerMap.getStepNum() + 1));
+            puzzleQueue.add(new MapState(leftMap, pointerMap.getStepNum() + 1, pointerMap));
         }
         //right
-        if(posX != pointerMap.getSize() -1){
+        if(posX != pointerMap.getSize() - 1){
             ArrayList<ArrayList<Integer>> rightMap = copyMap(cloneMap);
             swapIndexes(rightMap, posX, posY, posX +1, posY);
-            puzzleQueue.add(new MapState(rightMap, pointerMap.getStepNum() + 1));
+            puzzleQueue.add(new MapState(rightMap, pointerMap.getStepNum() + 1, pointerMap));
         }
 
 
@@ -115,12 +110,15 @@ public class SlidePuzzleSolver {
 
         ArrayList<ArrayList<Integer>> l = new ArrayList<>(Arrays.asList(a_1, a_2, a_3, a_4));
         MapState rootMap = new MapState(l);
+
+        //print map before beginning
         for(ArrayList<Integer> a : rootMap.getMapState()){
             for(Integer i : a){
                 System.out.print(i.toString() + ' ');
             }
             System.out.print('\n');
         }
+
         SlidePuzzleSolver s = new SlidePuzzleSolver(rootMap);
     }
 

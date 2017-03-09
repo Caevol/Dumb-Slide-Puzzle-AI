@@ -10,6 +10,7 @@ public class MapState {
     private int distance;
     private int stepNum;
     private boolean isSolved;
+    private MapState prevState;
 
     public MapState(int s){
         size = s;
@@ -39,6 +40,10 @@ public class MapState {
         return this.size;
     }
 
+    public MapState getPrevState(){
+        return this.prevState;
+    }
+
     public MapState(ArrayList<ArrayList<Integer>> m){
         //create map from clone
         size = m.size();
@@ -51,6 +56,11 @@ public class MapState {
     public MapState(ArrayList<ArrayList<Integer>> m, int stepi){
         this(m);
         stepNum = stepi;
+    }
+
+    public MapState(ArrayList<ArrayList<Integer>> m, int stepi, MapState preState){
+        this(m, stepi);
+        prevState = preState;
     }
 
     public ArrayList<ArrayList<Integer>> getMapState(){
@@ -92,6 +102,8 @@ public class MapState {
         return sum;
     }
 
+
+
     private int getSingleSlideDistance(int positionX, int positionY){
 
         int val = getValueAtPosition(positionX, positionY);
@@ -103,5 +115,28 @@ public class MapState {
         int goalPosY = val / this.size;
         return Math.abs(positionX - goalPosX) + Math.abs(positionY - goalPosY);
     }
+
+    public void printSolution(){
+        if(this.prevState == null){
+            this.printMap();
+            return;
+        }
+        else{
+            this.prevState.printSolution();
+            this.printMap();
+            return;
+        }
+    }
+
+    public void printMap(){
+        for(int y = 0; y < this.size; ++y){
+            for(int x = 0; x < this.size; ++x){
+                System.out.print("" + this.map.get(y).get(x) + " ");
+            }
+            System.out.print('\n');
+        }
+        System.out.print('\n');
+    }
+
 
 }
