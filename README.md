@@ -1,4 +1,4 @@
-# Dumb-Slide-Puzzle-AI
+# Simple-Slide_Puzzle-AI
 Simple A* algorithm to solve sliding puzzles.
 
 Uses a constant called RESET_RATE to reset the priority queue before it becomes too large.
